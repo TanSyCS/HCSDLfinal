@@ -1,0 +1,33 @@
+/* display.css */
+.TanSy {
+  display: flex;
+  flex-direction: row;
+}
+.display {
+  text-align: center;
+  font-size: 24px;
+  margin: 20px;
+}
+
+/* Styles for the table */
+.TableContainer {
+  margin-top: 20px;
+}
+
+/* Styles for the button */
+.Button {
+  text-transform: none; /* Prevent uppercase text */
+}
+
+/* Hover effect for the button */
+.Button:hover {
+  background-color: #1976d2; /* Change to your preferred hover color */
+  color: #fff; /* Change to your preferred text color */
+}
+.con {
+  display: flex;
+  flex-direction: column;
+}
+.table {
+  margin-bottom: 200px;
+}

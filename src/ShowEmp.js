@@ -1,16 +1,18 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+// import Table from "@mui/material/Table";
+// import TableBody from "@mui/material/TableBody";
+// import TableCell from "@mui/material/TableCell";
+// import TableContainer from "@mui/material/TableContainer";
+// import TableHead from "@mui/material/TableHead";
+// import TableRow from "@mui/material/TableRow";
+//import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import axios from "axios";
-
+import FilmPage from "./component/FilmPage";
+import DirectorPage2 from "./component/DirectorPage2";
+import ActorPage2 from "./component/ActorPage2";
 const currencies = [
   {
     value: "Film",
@@ -27,20 +29,44 @@ const currencies = [
 ];
 function ShowEmp() {
   const [job_type, setJobType] = React.useState("Film");
-  const [isDirector, setDirector] = React.useState(false);
   const [job_typeOnClick, setJob_TypeOnClick] = React.useState("Film");
   const [arrayOfEmp, setArrayOfEmp] = React.useState([]);
-  const handleSubmit = () => {
-    axios
-      .get("http://localhost:3001/admin/film")
-      .then((respone) => {
-        setArrayOfEmp(respone.data);
-        setJob_TypeOnClick(job_type);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+  const handleSubmit = async () => {
+    console.log(job_type);
+    if (job_type === "Film") {
+      axios
+        .get("http://localhost:3001/film")
+        .then((respone) => {
+          setArrayOfEmp(respone.data);
+          setJob_TypeOnClick(job_type);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (job_type === "Actor") {
+      axios
+        .get("http://localhost:3001/actor")
+        .then((respone) => {
+          setArrayOfEmp(respone.data);
+          setJob_TypeOnClick(job_type);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else if (job_type === "Director") {
+      axios
+        .get("http://localhost:3001/director")
+        .then((respone) => {
+          setArrayOfEmp(respone.data);
+          setJob_TypeOnClick(job_type);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+
   return (
     <div className="wrapper m-7">
       <h3>Chọn thông tin</h3>
@@ -79,37 +105,13 @@ function ShowEmp() {
           Tìm kiếm
         </Button>
       </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Thông tin tìm kiếm</TableCell>
-              <TableCell align="right">movie_ID</TableCell>
-              <TableCell align="right">movie_name</TableCell>
-              <TableCell align="right">genre</TableCell>
-              <TableCell align="right">release_day</TableCell>
-              <TableCell align="right">restriction</TableCell>
-              <TableCell align="right">duration</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {arrayOfEmp.map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell>{job_typeOnClick}</TableCell>
-                <TableCell align="right">{row.movie_ID}</TableCell>
-                <TableCell align="right">{row.movie_name}</TableCell>
-                <TableCell align="right">{row.genre}</TableCell>
-                <TableCell align="right">{row.release_day}</TableCell>
-                <TableCell align="right">{row.restriction}</TableCell>
-                <TableCell align="right">{row.duration}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+
+      <FilmPage arrayOfEmp={arrayOfEmp} job_typeOnClick={job_typeOnClick} />
+      <ActorPage2 arrayOfEmp={arrayOfEmp} job_typeOnClick={job_typeOnClick} />
+      <DirectorPage2
+        arrayOfEmp={arrayOfEmp}
+        job_typeOnClick={job_typeOnClick}
+      />
     </div>
   );
 }
